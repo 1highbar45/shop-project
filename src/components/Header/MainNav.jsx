@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function MainNav() {
+    // const isShowSearchModal = useToggle()
+    
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-white">
             <div className="container">

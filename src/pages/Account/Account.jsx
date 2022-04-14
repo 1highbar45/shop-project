@@ -1,7 +1,19 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Navigate, NavLink, Outlet } from 'react-router-dom'
+import { actionLogout } from '../../store/auth'
 
 export default function Account({ path }) {
+    const dispatch = useDispatch()
+    const { user } = useSelector(store => store.user)
+
+    const onLogout = (ev) => {
+        ev.preventDefault();
+        dispatch(actionLogout())
+    }
+
+    if (!user) return <Navigate to={'/auth'} />
+
     return (
         <div>
             {/* BREADCRUMB */}
@@ -48,7 +60,7 @@ export default function Account({ path }) {
                                         to={`${path}`}>
                                         Personal Info
                                     </NavLink>
-                                    <NavLink className="list-group-item list-group-item-action dropright-toggle active"
+                                    <NavLink className="list-group-item list-group-item-action dropright-toggle "
                                         to={`${path}/address`}>
                                         Addresses
                                     </NavLink>
@@ -56,9 +68,11 @@ export default function Account({ path }) {
                                         to={`${path}/payment`}>
                                         Payment Methods
                                     </NavLink>
-                                    <a className="list-group-item list-group-item-action dropright-toggle" href="#!">
+                                    <NavLink
+                                        onClick={onLogout}
+                                        className="list-group-item list-group-item-action dropright-toggle" to="#!">
                                         Logout
-                                    </a>
+                                    </NavLink>
                                 </div>
                             </nav>
                         </div>
