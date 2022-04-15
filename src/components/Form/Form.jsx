@@ -68,7 +68,7 @@ Form.Item = ({ name, label, rules, children, className }) => {
     if (children) {
         return (
             <div className={classNames('Form-Item', className)}>
-                <p>{_label}</p>
+                {/* <p>{_label}</p> */}
                 {
                     React.cloneElement(children, {
                         ...children.props,

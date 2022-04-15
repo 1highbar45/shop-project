@@ -57,7 +57,7 @@ export default function Account({ path }) {
                                         Wishlist
                                     </NavLink>
                                     <NavLink className="list-group-item list-group-item-action dropright-toggle "
-                                        to={`${path}`}>
+                                        to={`${path}`} end>
                                         Personal Info
                                     </NavLink>
                                     <NavLink className="list-group-item list-group-item-action dropright-toggle "
