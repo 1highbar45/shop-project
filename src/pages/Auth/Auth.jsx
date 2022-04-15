@@ -1,19 +1,38 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Form from '../../components/Form/Form'
 import Input from '../../components/Input/Input'
 import Button from '../../components/Button/Button'
 import { Navigate } from 'react-router-dom'
-import { actionFetchLogin } from '../../store/auth'
+import { actionFetchLogin, actionFetchRegister } from '../../store/auth'
+import { useToggle } from '../../hooks/useToggle'
 
 export default function Auth() {
     const formRegister = Form.useForm()
     const dispatch = useDispatch()
-    const { isFetchLogin } = useSelector(store => store.auth)
+
+    // const isFetchLogin = useToggle()
+    const [loginError, setLoginError] = useState('')
+
+    const { isFetchLogin, errorMessage } = useSelector(store => store.auth)
     const { user } = useSelector(store => store.user)
 
+    const isFetchRegister = useToggle()
+
     const onFinishLogin = (form) => {
+        isFetchLogin.setTrue()
+        setLoginError('')
         dispatch(actionFetchLogin(form))
+    }
+
+    const onFinishRegister = (form) => {
+        isFetchRegister.setTrue()
+        dispatch(actionFetchRegister({
+            data: form,
+            end() {
+                isFetchRegister.setTrue()
+            }
+        }))
     }
 
     if (user) {
@@ -36,27 +55,15 @@ export default function Auth() {
                                     <div className="row">
                                         <div className="col-12">
                                             {/* Email */}
-                                            <Form.Item name='username' label='Email Address *'>
+                                            <Form.Item name='username' rules={[{ required: true, message: 'Username must not be empty' }]}>
                                                 <Input placeholder="Email Address" />
                                             </Form.Item>
-                                            {/* <div className="form-group">
-                                                <label className="sr-only" htmlFor="loginEmail">
-                                                    Email Address *
-                                                </label>
-                                                <input className="form-control form-control-sm" id="loginEmail" type="email" placeholder="Email Address *" />
-                                            </div> */}
                                         </div>
                                         <div className="col-12">
                                             {/* Password */}
-                                            <Form.Item name='password' label='Password *'>
+                                            <Form.Item name='password' >
                                                 <Input type='password' placeholder="Password" />
                                             </Form.Item>
-                                            {/* <div className="form-group">
-                                                <label className="sr-only" htmlFor="loginPassword">
-                                                    Password *
-                                                </label>
-                                                <input className="form-control form-control-sm" id="loginPassword" type="password" placeholder="Password *" />
-                                            </div> */}
                                         </div>
                                         <div className="col-12 col-md">
                                             {/* Remember */}
@@ -95,60 +102,50 @@ export default function Auth() {
                                 {/* Heading */}
                                 <h6 className="mb-7">New Customer</h6>
                                 {/* Form */}
-                                <form >
+                                <Form onFinish={onFinishRegister} form={formRegister}>
                                     <div className="row">
                                         <div className="col-12">
                                             {/* Email */}
-                                            <div className="form-group">
-                                                <label className="sr-only" htmlFor="registerFirstName">
-                                                    First Name *
-                                                </label>
-                                                <input className="form-control form-control-sm" id="registerFirstName" type="text" placeholder="First Name *"
-                                                    onChange={e => form.firstname = e.target.value} />
-                                                {/* {errors.firstname && <p className='error-text'>{errors.firstname}</p>} */}
-                                            </div>
+                                            <Form.Item name='firstname'>
+                                                <Input placeholder="First Name *" />
+                                            </Form.Item>
                                         </div>
                                         <div className="col-12">
                                             {/* Email */}
-                                            <div className="form-group">
-                                                <label className="sr-only" htmlFor="registerLastName">
-                                                    Last Name *
-                                                </label>
-                                                <input className="form-control form-control-sm" id="registerLastName" type="text" placeholder="Last Name *"
-                                                    onChange={e => form.lastname = e.target.value} />
-                                                {/* {errors.lastname && <p className='error-text'>{errors.lastname}</p>} */}
-                                            </div>
+                                            <Form.Item name='lastname' >
+                                                <Input placeholder="Last Name *" />
+                                            </Form.Item>
                                         </div>
                                         <div className="col-12">
                                             {/* Email */}
-                                            <div className="form-group">
-                                                <label className="sr-only" htmlFor="registerEmail">
-                                                    Email Address *
-                                                </label>
-                                                <input className="form-control form-control-sm" id="registerEmail" type="email" placeholder="Email Address *"
-                                                    onChange={e => form.email = e.target.value} />
-                                                {/* {errors.email && <p className='error-text'>{errors.email}</p>} */}
-                                            </div>
+                                            <Form.Item name='email' >
+                                                <Input placeholder="Email Address *" />
+                                            </Form.Item>
                                         </div>
                                         <div className="col-12 col-md-6">
                                             {/* Password */}
-                                            <div className="form-group">
+                                            <Form.Item name='password' >
+                                                <Input placeholder="Password *" />
+                                            </Form.Item>
+                                            {/* <div className="form-group">
                                                 <label className="sr-only" htmlFor="registerPassword">
                                                     Password *
                                                 </label>
                                                 <input className="form-control form-control-sm" id="registerPassword" type="password" placeholder="Password *"
                                                     onChange={e => form.password = e.target.value} />
-                                                {/* {errors.password && <p className='error-text'>{errors.password}</p>} */}
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="col-12 col-md-6">
                                             {/* Password */}
-                                            <div className="form-group">
+                                            <Form.Item name='confirmPassword' >
+                                                <Input placeholder="Confirm Password *" />
+                                            </Form.Item>
+                                            {/* <div className="form-group">
                                                 <label className="sr-only" htmlFor="registerPasswordConfirm">
                                                     Confirm Password *
                                                 </label>
                                                 <input className="form-control form-control-sm" id="registerPasswordConfirm" type="password" placeholder="Confrm Password *" />
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="col-12 col-md-auto">
                                             {/* Link */}
@@ -170,12 +167,12 @@ export default function Auth() {
                                         </div>
                                         <div className="col-12">
                                             {/* Button */}
-                                            <button className="btn btn-sm btn-dark" type="submit">
+                                            <Button loading={isFetchRegister.value} className="btn btn-sm btn-dark" type="submit">
                                                 Register
-                                            </button>
+                                            </Button>
                                         </div>
                                     </div>
-                                </form>
+                                </Form>
                             </div>
                         </div>
                     </div>

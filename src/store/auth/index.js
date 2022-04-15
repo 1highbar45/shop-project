@@ -16,3 +16,4 @@ export const { reducer: authReducer, actions: authActions, name } = createSlice(
 
 export const actionFetchLogin = createAction(`${name}/fetchLogin`)
 export const actionLogout = createAction(`${name}/logout`)
+export const actionFetchRegister = createAction(`${name}/fetchRegister`)

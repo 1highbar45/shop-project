@@ -1,5 +1,5 @@
 import { call, put, takeLatest, putResolve } from "redux-saga/effects";
-import { actionFetchLogin, actionLogout, authActions } from ".";
+import { actionFetchLogin, actionFetchRegister, actionLogout, authActions } from ".";
 import { actionFetchUser } from "../user";
 import { authService } from "../../services/authService"
 import { clearToken, clearUser, setToken } from "../../utils/token"
@@ -10,7 +10,7 @@ function* fetchLogin(action) {
         yield putResolve(authActions.statusFetchLogin(true))
 
         const res = yield call(authService.login, action.payload)
-        console.log('res', res);
+        // console.log('res', res);
         if (res.message) {
             return yield put(authActions.errorMessage(res.message))
         }
@@ -35,7 +35,18 @@ function* logout() {
     clearUser()
 }
 
+function* fetchRegister(action) {
+    try {
+
+        yield delay(3000)
+    } finally {
+        action.payload?.end?.()
+    }
+}
+
 export function* authSaga() {
     yield takeLatest(actionFetchLogin, fetchLogin)
     yield takeLatest(actionLogout, logout)
+
+    yield takeLatest(actionFetchRegister, fetchRegister)
 }
