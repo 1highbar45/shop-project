@@ -8,7 +8,7 @@ function* fetchUser() {
     try {
         if (getToken()) {
             const user = yield call(userService.getInfo)
-            console.log('user', user);
+            // console.log('user', user);
             setUser(user.data)
 
             yield put(userActions.setUser(user.data))

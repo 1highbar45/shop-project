@@ -13,7 +13,7 @@ export default function Wishlist() {
 
     const page = parseInt(objUrl.page || '1')
     const { data: products, loading, paginate } = useQuery(() => profileService.getWishList(`?page=${page}`), [page])
-
+    // console.log('run');
     return (
         <div className="col-12 col-md-9 col-lg-8 offset-lg-1">
             {/* Products */}
@@ -22,7 +22,7 @@ export default function Wishlist() {
                 <ListView
                     LoadingComponent={ProductCardLoading}
                     isLoading={loading}
-                    items={products?.data}
+                    items={products}
                     render={e => <ProductCard key={e.id} {...e} />}
                     loadingCount={6}
                 />

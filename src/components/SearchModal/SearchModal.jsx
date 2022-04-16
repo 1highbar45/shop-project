@@ -1,7 +1,36 @@
+import React, { useState } from 'react'
 import { Drawer } from 'antd';
-import React from 'react'
+import { useQueryURL } from '../../hooks/useQueryURL';
+import { generatePath, Link, useNavigate } from 'react-router-dom';
+import { productService } from '../../services/productService'
+import { currency } from '../../utils/number'
+import { PRODUCT_DETAIL_PATH } from '../../constants/path';
+import Skeleton from '@mui/material/Skeleton';
+import ListView from '../../components/ListView/ListView'
 
 export default function SearchModal({ visible, onClose }) {
+    // const queryObj = useQueryURL()
+    // console.log(queryObj);
+    // const navigate = useNavigate()
+    // const [value, setValue] = useState(queryObj.q || '')
+    const [value, setValue] = useState()
+    const [product, setProduct] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const onSearchChange = (ev) => {
+        setValue(ev.target.value)
+    }
+
+    const onKeyUp = async (ev) => {
+        if (ev.key === 'Enter') {
+            // navigate('/product' + '?q=' + value)
+            setIsLoading(true)
+            const product = await productService.getProduct(`?name=${encodeURI(value)}&limit=5`)
+            // console.log(product);
+            setProduct(product.data)
+            setIsLoading(false)
+        }
+    }
+
     return (
         <Drawer
             visible={visible}
@@ -11,11 +40,11 @@ export default function SearchModal({ visible, onClose }) {
             width={470}
             onClose={onClose}
         >
-            <div id="modalSearch">
+            <div >
                 <div className="modal-dialog modal-dialog-vertical" role="document">
                     <div className="modal-content">
                         {/* Close */}
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" onClick={onClose} data-dismiss="modal" aria-label="Close">
                             <i className="fe fe-x" aria-hidden="true" />
                         </button>
                         {/* Header*/}
@@ -24,7 +53,7 @@ export default function SearchModal({ visible, onClose }) {
                         </div>
                         {/* Body: Form */}
                         <div className="modal-body">
-                            <form>
+                            <div>
                                 <div className="form-group">
                                     <label className="sr-only" htmlFor="modalSearchCategories">Categories:</label>
                                     <select className="custom-select" id="modalSearchCategories">
@@ -35,89 +64,34 @@ export default function SearchModal({ visible, onClose }) {
                                     </select>
                                 </div>
                                 <div className="input-group input-group-merge">
-                                    <input className="form-control" type="search" placeholder="Search" />
+                                    <input value={value} onKeyUp={onKeyUp} onChange={onSearchChange} className="form-control" type="search" placeholder="Search" />
                                     <div className="input-group-append">
                                         <button className="btn btn-outline-border" type="submit">
                                             <i className="fe fe-search" />
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         {/* Body: Results (add `.d-none` to disable it) */}
                         <div className="modal-body border-top font-size-sm">
                             {/* Heading */}
                             <p>Search Results:</p>
                             {/* Items */}
-                            <div className="row align-items-center position-relative mb-5">
-                                <div className="col-4 col-md-3">
-                                    {/* Image */}
-                                    <img className="img-fluid" src="/img/products/product-5.jpg" alt="..." />
-                                </div>
-                                <div className="col position-static">
-                                    {/* Text */}
-                                    <p className="mb-0 font-weight-bold">
-                                        <a className="stretched-link text-body" href="./product.html">Leather mid-heel Sandals</a> <br />
-                                        <span className="text-muted">$129.00</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="row align-items-center position-relative mb-5">
-                                <div className="col-4 col-md-3">
-                                    {/* Image */}
-                                    <img className="img-fluid" src="/img/products/product-6.jpg" alt="..." />
-                                </div>
-                                <div className="col position-static">
-                                    {/* Text */}
-                                    <p className="mb-0 font-weight-bold">
-                                        <a className="stretched-link text-body" href="./product.html">Cotton floral print Dress</a> <br />
-                                        <span className="text-muted">$40.00</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="row align-items-center position-relative mb-5">
-                                <div className="col-4 col-md-3">
-                                    {/* Image */}
-                                    <img className="img-fluid" src="/img/products/product-7.jpg" alt="..." />
-                                </div>
-                                <div className="col position-static">
-                                    {/* Text */}
-                                    <p className="mb-0 font-weight-bold">
-                                        <a className="stretched-link text-body" href="./product.html">Leather Sneakers</a> <br />
-                                        <span className="text-primary">$85.00</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="row align-items-center position-relative mb-5">
-                                <div className="col-4 col-md-3">
-                                    {/* Image */}
-                                    <img className="img-fluid" src="/img/products/product-8.jpg" alt="..." />
-                                </div>
-                                <div className="col position-static">
-                                    {/* Text */}
-                                    <p className="mb-0 font-weight-bold">
-                                        <a className="stretched-link text-body" href="./product.html">Cropped cotton Top</a> <br />
-                                        <span className="text-muted">$29.00</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="row align-items-center position-relative mb-5">
-                                <div className="col-4 col-md-3">
-                                    {/* Image */}
-                                    <img className="img-fluid" src="/img/products/product-9.jpg" alt="..." />
-                                </div>
-                                <div className="col position-static">
-                                    {/* Text */}
-                                    <p className="mb-0 font-weight-bold">
-                                        <a className="stretched-link text-body" href="./product.html">Floral print midi Dress</a> <br />
-                                        <span className="text-muted">$50.00</span>
-                                    </p>
-                                </div>
-                            </div>
+                            <ListView
+                                LoadingComponent={SearchItemLoading}
+                                isLoading={isLoading}
+                                items={product}
+                                render={e => <SearchItem key={e._id} {...e} />}
+                                loadingCount={5}
+                            />
+                            {
+                                product.length === 0 && <p>Ko co san pham nao nhu ban tim kiem</p>
+                            }
                             {/* Button */}
-                            <a className="btn btn-link px-0 text-reset" href="./shop.html">
+                            <Link className="btn btn-link px-0 text-reset" to={'/product' + '?q=' + value} onClick={ev => onClose()}>
                                 View All <i className="fe fe-arrow-right ml-2" />
-                            </a>
+                            </Link>
                         </div>
                         {/* Body: Empty (remove `.d-none` to disable it) */}
                         <div className="d-none modal-body">
@@ -133,5 +107,41 @@ export default function SearchModal({ visible, onClose }) {
                 </div>
             </div>
         </Drawer>
+    )
+}
+
+const SearchItemLoading = () => {
+    return (
+        <div className="row align-items-center position-relative mb-5">
+            <div className="col-4 col-md-3">
+                {/* Image */}
+                <Skeleton width={44} height={44} />
+            </div>
+            <div className="col position-static">
+                {/* Text */}
+                <p className="mb-0 font-weight-bold">
+                    <Skeleton height={43} variant="text" />
+                    <Skeleton height={20} width="30%" variant="text" />
+                </p>
+            </div>
+        </div>
+    )
+}
+
+const SearchItem = ({ name, real_price, price, thumbnail_url, slug }) => {
+    return (
+        <div className="row align-items-center position-relative mb-5">
+            <div className="col-4 col-md-3">
+                {/* Image */}
+                <img className="img-fluid" src={thumbnail_url} alt="..." />
+            </div>
+            <div className="col position-static">
+                {/* Text */}
+                <p className="mb-0 font-weight-bold">
+                    <Link className="stretched-link text-body" to={generatePath(PRODUCT_DETAIL_PATH, { slug })}>{name}</Link> <br />
+                    <span className="text-primary">{currency(real_price)}</span>
+                </p>
+            </div>
+        </div>
     )
 }

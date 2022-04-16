@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
 export const useToggle = (initValue = false) => {
-    const { isTrue, setIsTrue } = useState(initValue);
+    const [isTrue, setIsTrue] = useState(initValue);
     const setTrue = useCallback(() => {
         setIsTrue(true);
     }, [])
@@ -18,6 +18,6 @@ export const useToggle = (initValue = false) => {
         value: isTrue,
         setTrue,
         setFalse,
-        toggle 
+        toggle
     }
 }

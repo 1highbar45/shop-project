@@ -1,11 +1,19 @@
 import React from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import ListView from '../../components/ListView/ListView'
 import Paginate from '../../components/Paginate/Paginate'
 import ProductCard, { ProductCardLoading } from '../../components/ProductCard/ProductCard'
 import useQuery from '../../hooks/useQuery'
+import { useQueryURL } from '../../hooks/useQueryURL'
 import { productService } from '../../services/productService'
-import { convertQueryURLToObject } from '../../utils/url'
+import { convertObjToQueryString, convertQueryURLToObject } from '../../utils/url'
+import styled from 'styled-components'
+import { PRODUCT_PATH } from '../../constants/path'
+import Slider from '../../components/Slider/Slider'
+
+const SearchWrap = styled.p`
+    font-size: 25px;
+`;
 
 export default function Product() {
     const query = useSearchParams()
@@ -14,8 +22,22 @@ export default function Product() {
     // console.log(objUrl);
 
     const page = parseInt(objUrl.page || '1')
-    const { data: products, loading: productLoading, paginate } = useQuery(() => productService.getProduct(`?page=${page}`), [page])
-    // console.log('total page', paginate);
+
+    const queryObj = useQueryURL()
+    const navigate = useNavigate()
+    const queryString = convertObjToQueryString({
+        name: queryObj.q,
+        page: page,
+        sort: queryObj.sort
+    })
+    const { data: products, loading: productLoading, paginate } = useQuery(() => productService.getProduct(queryString), [queryString])
+
+    const onChangeSort = (ev) => {
+        queryObj.sort = ev.target.value
+        queryObj.page = undefined
+        const queryString = convertObjToQueryString(queryObj)
+        navigate(PRODUCT_PATH + queryString)
+    }
 
     return (
         <section className="py-11">
@@ -613,18 +635,15 @@ export default function Product() {
                     </div>
                     <div className="col-12 col-md-8 col-lg-9">
                         {/* Slider */}
-                        <div className="flickity-page-dots-inner mb-9" data-flickity="{&quot;pageDots&quot;: true}">
-                            {/* Item */}
+                        <Slider>
                             <div className="w-100">
                                 <div className="card bg-h-100 bg-left" style={{ backgroundImage: 'url(/img/covers/cover-24.jpg)' }}>
                                     <div className="row" style={{ minHeight: 400 }}>
                                         <div className="col-12 col-md-10 col-lg-8 col-xl-6 align-self-center">
                                             <div className="card-body px-md-10 py-11">
-                                                {/* Heading */}
                                                 <h4>
                                                     2019 Summer Collection
                                                 </h4>
-                                                {/* Button */}
                                                 <a className="btn btn-link px-0 text-body" href="shop.html">
                                                     View Collection <i className="fe fe-arrow-right ml-2" />
                                                 </a>
@@ -634,20 +653,16 @@ export default function Product() {
                                     </div>
                                 </div>
                             </div>
-                            {/* Item */}
                             <div className="w-100">
                                 <div className="card bg-cover" style={{ backgroundImage: 'url(/img/covers/cover-29.jpg)' }}>
                                     <div className="row align-items-center" style={{ minHeight: 400 }}>
                                         <div className="col-12 col-md-10 col-lg-8 col-xl-6">
                                             <div className="card-body px-md-10 py-11">
-                                                {/* Heading */}
                                                 <h4 className="mb-5">Get -50% from Summer Collection</h4>
-                                                {/* Text */}
                                                 <p className="mb-7">
                                                     Appear, dry there darkness they're seas. <br />
                                                     <strong className="text-primary">Use code 4GF5SD</strong>
                                                 </p>
-                                                {/* Button */}
                                                 <a className="btn btn-outline-dark" href="shop.html">
                                                     Shop Now <i className="fe fe-arrow-right ml-2" />
                                                 </a>
@@ -656,24 +671,20 @@ export default function Product() {
                                     </div>
                                 </div>
                             </div>
-                            {/* Item */}
                             <div className="w-100">
                                 <div className="card bg-cover" style={{ backgroundImage: 'url(/img/covers/cover-30.jpg)' }}>
                                     <div className="row align-items-center" style={{ minHeight: 400 }}>
                                         <div className="col-12">
                                             <div className="card-body px-md-10 py-11 text-center text-white">
-                                                {/* Preheading */}
                                                 <p className="text-uppercase">Enjoy an extra</p>
-                                                {/* Heading */}
                                                 <h1 className="display-4 text-uppercase">50% off</h1>
-                                                {/* Link */}
                                                 <a className="link-underline text-reset" href="shop.html">Shop Collection</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </Slider>
                         {/* Header */}
                         <div className="row align-items-center mb-7">
                             <div className="col-12 col-md">
@@ -691,8 +702,11 @@ export default function Product() {
                             </div>
                             <div className="col-12 col-md-auto">
                                 {/* Select */}
-                                <select className="custom-select custom-select-xs">
-                                    <option selected>Most popular</option>
+                                <select onChange={onChangeSort} defaultValue={queryObj.sort} className="custom-select custom-select-xs">
+                                    <option value="" selected>--Sort--</option>
+                                    <option value="real_price.desc" selected>High price</option>
+                                    <option value="real_price.asc" selected>Low price</option>
+                                    <option value="rating_average.desc" selected>Highly recommended</option>
                                 </select>
                             </div>
                         </div>
@@ -741,6 +755,7 @@ export default function Product() {
                                 </span>
                             </div>
                         </div>
+                        {queryObj.q && <SearchWrap> Search results for '{queryObj.q}'</SearchWrap>}
                         {/* Products */}
                         <div className="row">
                             {/* {productLoading ? [...Array(15)].map((_, i) => <ProductCardLoading key={i} />)
@@ -748,7 +763,7 @@ export default function Product() {
                             <ListView
                                 LoadingComponent={ProductCardLoading}
                                 isLoading={productLoading}
-                                items={products?.data}
+                                items={products}
                                 render={e => <ProductCard key={e.id} {...e} />}
                                 loadingCount={9}
                             />

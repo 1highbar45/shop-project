@@ -6,6 +6,7 @@ import App from './App'
 import './assets/dest/css/libs/theme.min.css'
 import './assets/dest/css/stylelibs.min.css'
 import store from './store'
+import 'antd/dist/antd.css';
 
 ReactDOM.render(
   <React.StrictMode>

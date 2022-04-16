@@ -1,8 +1,9 @@
 import { useSearchParams } from "react-router-dom"
 import { convertQueryURLToObject } from "../utils/url"
 
-export const useQueryURL = () => {
+export const usePage = () => {
     const query = useSearchParams()
     const objUrl = convertQueryURLToObject(query[0].toString())
-    return objUrl
+    const page = parseInt(objUrl.page || '1')
+    return page
 }
