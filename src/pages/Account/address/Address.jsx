@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Address() {
+    const { data: address } = useQuery(() => profileService.getAddressList());
     return (
         <div className="col-12 col-md-9 col-lg-8 offset-lg-1">
             <div className="row">
@@ -75,4 +76,8 @@ export default function Address() {
             </div>
         </div>
     )
+}
+
+const AddressItem = () => {
+
 }

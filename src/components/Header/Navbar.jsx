@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { createContext, useContext, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslate } from '../../core/components/TranslateProvider'
 
 export default function Navbar() {
+    const { selectLanguage } = useTranslate()
     return (
         <div className="navbar navbar-topbar navbar-expand-xl navbar-light bg-light">
             <div className="container">
@@ -17,12 +19,15 @@ export default function Navbar() {
                 <div className="collapse navbar-collapse" id="topbarCollapse">
                     {/* Nav */}
                     <ul className="nav nav-divided navbar-nav mr-auto">
-                        <li className="nav-item dropdown">
-                            {/* Toggle */}
+                        <TopBarMenu>
+                            <TopBarMenu.Item><img className="mb-1 mr-1" src="/img/flags/usa.svg" alt="..." />United States</TopBarMenu.Item>
+                            <TopBarMenu.Item><img className="mb-1 mr-2" src="/img/flags/canada.svg" alt="Canada" />Canada</TopBarMenu.Item>
+                            <TopBarMenu.Item><img className="mb-1 mr-2" src="/img/flags/germany.svg" alt="Germany" />Germany</TopBarMenu.Item>
+                        </TopBarMenu>
+                        {/* <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
                                 <img className="mb-1 mr-1" src="/img/flags/usa.svg" alt="..." /> United States
                             </a>
-                            {/* Menu */}
                             <div className="dropdown-menu minw-0">
                                 <a className="dropdown-item" href="#!">
                                     <img className="mb-1 mr-2" src="/img/flags/usa.svg" alt="USA" />United States
@@ -34,26 +39,31 @@ export default function Navbar() {
                                     <img className="mb-1 mr-2" src="/img/flags/germany.svg" alt="Germany" />Germany
                                 </a>
                             </div>
-                        </li>
-                        <li className="nav-item dropdown">
-                            {/* Toggle */}
+                        </li> */}
+                        <TopBarMenu>
+                            <TopBarMenu.Item>USD</TopBarMenu.Item>
+                            <TopBarMenu.Item>EUR</TopBarMenu.Item>
+                        </TopBarMenu>
+                        {/* <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#">USD</a>
-                            {/* Menu */}
                             <div className="dropdown-menu minw-0">
                                 <a className="dropdown-item" href="#!">USD</a>
                                 <a className="dropdown-item" href="#!">EUR</a>
                             </div>
-                        </li>
-                        <li className="nav-item dropdown">
-                            {/* Toggle */}
+                        </li> */}
+                        {/* <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#">English</a>
-                            {/* Menu */}
                             <div className="dropdown-menu minw-0">
                                 <a className="dropdown-item" href="#">English</a>
                                 <a className="dropdown-item" href="#">French</a>
                                 <a className="dropdown-item" href="#">German</a>
                             </div>
-                        </li>
+                        </li> */}
+                        <TopBarMenu>
+                            <TopBarMenu.Item onClick={() => selectLanguage('en')}>English</TopBarMenu.Item>
+                            <TopBarMenu.Item onClick={() => selectLanguage('vi')}>French</TopBarMenu.Item>
+                            <TopBarMenu.Item onClick={() => selectLanguage('ge')}>German</TopBarMenu.Item>
+                        </TopBarMenu>
                     </ul>
                     {/* Nav */}
                     <ul className="nav navbar-nav mr-8">
@@ -93,6 +103,52 @@ export default function Navbar() {
                 </div>
             </div>
         </div>
-
     )
+}
+
+const Context = createContext()
+
+const TopBarMenu = ({ initialSelect = 0, children }) => {
+    const [active, setActive] = useState(initialSelect)
+
+    const ref = useRef()
+    const hoverIn = () => {
+        ref.current.classList.add('show')
+        ref.current.querySelector('.dropdown-menu').classList.add('show')
+    }
+    const hoverOut = () => {
+        ref.current.classList.remove('show')
+        ref.current.querySelector('.dropdown-menu').classList.remove('show')
+    }
+
+    return (
+        <Context.Provider value={{ setActive }}>
+            <li className="nav-item dropdown hovered" ref={ref} onMouseEnter={hoverIn} onMouseLeave={hoverOut}>
+                {/* Toggle */}
+                {
+                    React.cloneElement(React.Children.toArray(children)?.[active], {
+                        className: 'nav-link dropdown-toggle',
+                    })
+                }
+                {/* Menu */}
+                <div className="dropdown-menu minw-0">
+                    {
+                        React.Children.map(children, (child, i) => React.cloneElement(child, { index: i }))
+                    }
+                </div>
+            </li>
+        </Context.Provider>
+    )
+}
+
+TopBarMenu.Item = ({ index, children, ...props }) => {
+    const { setActive } = useContext(Context)
+    const _onClick = (ev) => {
+        if (typeof index !== undefined) {
+            ev.preventDefault()
+            setActive(index)
+        }
+    }
+
+    return <a className="dropdown-item" href="#" {...props} onClick={_onClick}>{children}</a>
 }
