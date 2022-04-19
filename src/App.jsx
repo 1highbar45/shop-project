@@ -25,12 +25,14 @@ import { AUTH_PATH, HOME_PATH, PRODUCT_DETAIL_PATH, PRODUCT_PATH } from './const
 import Auth from './pages/Auth'
 import { AppProvider } from './core'
 import store from './store'
+import vi from './locals/vi.json'
+import en from './locals/en.json'
 
 function App() {
 
   return (
-    // <AppProvider store={store}>
-    <div className="App">
+    <AppProvider store={store} translate={{ en, vi }} local='en'>
+      {/* <div className="App"> */}
       <Routes>
         <Route element={<MainLayout />}>
           <Route path={HOME_PATH} element={<Home />} />
@@ -57,8 +59,8 @@ function App() {
         </Route>
         <Route path='/coming-soon' element={<ComingSoon />} />
       </Routes>
-    </div>
-    // </AppProvider>
+      {/* </div> */}
+    </AppProvider>
   )
 }
 

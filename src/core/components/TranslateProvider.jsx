@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const Context = createContext({
     selectLanguage: (lang = 'en') => { },
@@ -6,13 +6,14 @@ const Context = createContext({
     _t: (k = '') => k
 })
 
-// translate = {
-//     en: {},
-//     vi: { "Home": "Trang chủ" }
-// }
+const LANG_SERVICE_KEY = 'lang' 
 
 export const TranslateProvider = ({ local = 'en', translate = {}, children }) => {
-    const [_local, setLocal] = useState(local)
+    const [_local, setLocal] = useState(localStorage.getItem(LANG_SERVICE_KEY) || local)
+
+    useEffect(() => {
+        localStorage.setItem(LANG_SERVICE_KEY, _local)
+    }, [_local])
 
     const selectLanguage = (local) => {
         setLocal(local)

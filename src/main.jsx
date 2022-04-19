@@ -7,12 +7,10 @@ import './assets/dest/css/libs/theme.min.css'
 import './assets/dest/css/stylelibs.min.css'
 import store from './store'
 import 'antd/dist/antd.css';
+import { createRoot } from 'react-dom/client';
 
-ReactDOM.render(
-    <BrowserRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
-    </BrowserRouter>,
-  document.getElementById('root')
+const root = createRoot(document.getElementById('root'));
+
+root.render(
+  <App />
 )

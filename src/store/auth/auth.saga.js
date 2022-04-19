@@ -10,7 +10,7 @@ function* fetchLogin(action) {
         yield putResolve(authActions.statusFetchLogin(true))
 
         const res = yield call(authService.login, action.payload)
-        console.log('res', res);
+        // console.log('res', res);
         if (res.message) {
             return yield put(authActions.errorMessage(res.message))
         }

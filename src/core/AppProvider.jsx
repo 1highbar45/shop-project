@@ -1,13 +1,16 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+import { TranslateProvider } from './components/TranslateProvider'
 
-export function AppProvider({ children, store }) {
+export function AppProvider({ children, store, local, translate }) {
     return (
         <BrowserRouter>
-            <Provider store={store}>
-                {children}
-            </Provider>
+            <TranslateProvider local={local} translate={translate}>
+                <Provider store={store}>
+                    {children}
+                </Provider>
+            </TranslateProvider>
         </BrowserRouter>
     )
 }

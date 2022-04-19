@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTranslate } from '../../core/components/TranslateProvider'
 
 export default function Navbar() {
-    const { selectLanguage } = useTranslate()
+    const { selectLanguage, local } = useTranslate()
     return (
         <div className="navbar navbar-topbar navbar-expand-xl navbar-light bg-light">
             <div className="container">
@@ -59,10 +59,10 @@ export default function Navbar() {
                                 <a className="dropdown-item" href="#">German</a>
                             </div>
                         </li> */}
-                        <TopBarMenu>
+                        <TopBarMenu initialSelect={['en', 'vi'].indexOf(local)}>
                             <TopBarMenu.Item onClick={() => selectLanguage('en')}>English</TopBarMenu.Item>
-                            <TopBarMenu.Item onClick={() => selectLanguage('vi')}>French</TopBarMenu.Item>
-                            <TopBarMenu.Item onClick={() => selectLanguage('ge')}>German</TopBarMenu.Item>
+                            <TopBarMenu.Item onClick={() => selectLanguage('vi')}>Vietnamese</TopBarMenu.Item>
+                            {/* <TopBarMenu.Item onClick={() => selectLanguage('ge')}>German</TopBarMenu.Item> */}
                         </TopBarMenu>
                     </ul>
                     {/* Nav */}
@@ -141,12 +141,13 @@ const TopBarMenu = ({ initialSelect = 0, children }) => {
     )
 }
 
-TopBarMenu.Item = ({ index, children, ...props }) => {
+TopBarMenu.Item = ({ index, children, onClick, ...props }) => {
     const { setActive } = useContext(Context)
     const _onClick = (ev) => {
         if (typeof index !== undefined) {
             ev.preventDefault()
             setActive(index)
+            onClick?.()
         }
     }
 

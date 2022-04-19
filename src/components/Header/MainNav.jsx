@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import SearchModal from '../SearchModal/SearchModal'
 import { useToggle } from '../../hooks/useToggle'
 import { HOME_PATH, PRODUCT_PATH } from '../../constants/path'
+import { useTranslate } from '../../core/components/TranslateProvider'
 
 export default function MainNav() {
     const isShowSearchModal = useToggle()
+    const { _t } = useTranslate()
 
     const onOpenSearch = (ev) => {
         ev.preventDefault()
@@ -29,7 +31,7 @@ export default function MainNav() {
                         {/* Nav */}
                         <ul className="navbar-nav mx-auto">
                             <li className="nav-item dropdown">
-                                <Link className="nav-link" to="/">Home</Link>
+                                <Link className="nav-link" to="/">{_t('Home')}</Link>
                             </li>
                             <li className="nav-item dropdown">
                                 <Link className="nav-link" to={PRODUCT_PATH}>Shop</Link>
