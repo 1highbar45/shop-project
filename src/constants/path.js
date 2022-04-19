@@ -6,4 +6,7 @@ export const ACCOUNT_PATH = '/account'
 export const ACCOUNT_ADDRESS_PATH = '/account/address'
 export const ACCOUNT_ADDRESS_DETAIL_PATH = '/account/address/:action/:id?'
 
+export const ACCOUNT_ORDER_PATH = '/account/order'
+export const ACCOUNT_ORDER_DETAIL_PATH = '/account/order/:id'
+
 export const AUTH_PATH = '/auth'

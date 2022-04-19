@@ -11,7 +11,6 @@ import Page404 from './pages/Page404/Page404'
 import StoreLocator from './pages/StoreLocator/StoreLocator'
 import OrderCompleted from './pages/OrderCompleted/OrderCompleted'
 import ShippingAndReturns from './pages/ShippingAndReturns/ShippingAndReturns'
-import Auth from './pages/Auth/Auth'
 import Checkout from './pages/checkout/Checkout'
 import Account from './pages/account/Account'
 import Address from './pages/account/address/Address'
@@ -22,7 +21,10 @@ import Product from './pages/Product/Product'
 import Wishlist from './pages/account/Wishlist/Wishlist'
 import ProductDetail from './pages/product/[slug]'
 import Home from './pages/Home'
-// import { AppProvider } from './core'
+import { AUTH_PATH, HOME_PATH, PRODUCT_DETAIL_PATH, PRODUCT_PATH } from './constants/path'
+import Auth from './pages/Auth'
+import { AppProvider } from './core'
+import store from './store'
 
 function App() {
 
@@ -31,7 +33,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path='/' element={<Home />} />
+          <Route path={HOME_PATH} element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact-us' element={<Contact />} />
           <Route path='/faq' element={<FaQ />} />
@@ -41,10 +43,10 @@ function App() {
           <Route path='/store-locator' element={<StoreLocator />} />
           <Route path='/order-completed' element={<OrderCompleted />} />
           <Route path='/shipping-and-returns' element={<ShippingAndReturns />} />
-          <Route path='/auth' element={<Auth />} />
+          <Route path={AUTH_PATH} element={<Auth />} />
           <Route path='/checkout' element={<Checkout />} />
-          <Route path='/product' element={<Product />} />
-          <Route path='/product/:id' element={<ProductDetail />} />
+          <Route path={PRODUCT_PATH} element={<Product />} />
+          <Route path={PRODUCT_DETAIL_PATH} element={<ProductDetail />} />
           <Route path='/account' element={<Account path="/account" />} >
             <Route index element={<PersonalInfo />} />
             <Route path='order' element={<Order />} />

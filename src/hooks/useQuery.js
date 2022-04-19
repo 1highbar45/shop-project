@@ -5,20 +5,28 @@ const useQuery = (callback, dependencyList = [], initialValue = undefined) => {
     const [loading, setLoading] = useState(true)
     const [paginate, setPaginate] = useState()
     useEffect(() => {
+        reFetch()
+    }, dependencyList)
+
+    const reFetch = () => {
         setLoading(true)
         callback()
             .then(res => {
                 // console.log(res);
                 setData(res.data)
-                setPaginate(res.data?.paginate)
+                if (res.paginate) {
+                    // setPaginate(res.data?.paginate)
+                    setPaginate(res.paginate)
+                }
                 setLoading(false)
             })
-    }, dependencyList)
+    }
 
     return {
         data,
         loading,
-        paginate
+        paginate,
+        reFetch
     }
 }
 

@@ -2,6 +2,9 @@ import React from 'react'
 import { currency } from '../../utils/number'
 import Skeleton from '@mui/material/Skeleton';
 import { generatePath, Link } from 'react-router-dom';
+import { PRODUCT_DETAIL_PATH } from '../../constants/path';
+import { profileService } from '../../services/profileService';
+import { message } from 'antd';
 
 export const ProductCardLoading = () => {
     return (
@@ -32,8 +35,15 @@ export const ProductCardLoading = () => {
     )
 }
 
-export default function ProductCard({ name, real_price, images, id }) {
-    const productDetailPath = generatePath('/product/:id', { id })
+export default function ProductCard({ name, real_price, images, slug, _id }) {
+    const productDetailPath = generatePath(PRODUCT_DETAIL_PATH, { slug })
+
+    const onClickAddWishlist = async () => {
+        const res = await profileService.addWishList(_id)
+        if (res.insertCount) {
+            message.success('Add product success')
+        }
+    }
 
     return (
         <div className="col-6 col-md-4">
@@ -63,7 +73,7 @@ export default function ProductCard({ name, real_price, images, id }) {
                             </button>
                         </span>
                         <span className="card-action">
-                            <button className="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
+                            <button className="btn btn-xs btn-circle btn-white-primary" onClick={onClickAddWishlist}>
                                 <i className="fe fe-heart" />
                             </button>
                         </span>

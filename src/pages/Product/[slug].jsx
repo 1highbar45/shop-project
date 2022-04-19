@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import Tab from '../../components/Tab/Tab'
+import { HOME_PATH } from '../../constants/path'
+import useQuery from '../../hooks/useQuery'
+import { productService } from '../../services/productService'
+import { currency } from '../../utils/number'
 
 export default function ProductDetail() {
     // const [tabActive, setTabActive] = useState(0)
@@ -16,6 +21,16 @@ export default function ProductDetail() {
     //     ev.preventDefault()
     //     setTabActive(i)
     // }
+
+    const { slug } = useParams()
+
+    const { data: detail, loading } = useQuery(() => productService.getProductDetail(slug))
+
+    console.log(detail);
+
+    if(loading){
+        return null
+    }
 
     return (
         <div>
@@ -120,11 +135,11 @@ export default function ProductDetail() {
                                         </div>
                                     </div>
                                     {/* Heading */}
-                                    <h3 className="mb-2">Leather Sneakers</h3>
+                                    <h3 className="mb-2">{detail[0].name}</h3>
                                     {/* Price */}
                                     <div className="mb-7">
-                                        <span className="font-size-lg font-weight-bold text-gray-350 text-decoration-line-through">$115.00</span>
-                                        <span className="ml-1 font-size-h5 font-weight-bolder text-primary">$85.00</span>
+                                        <span className="font-size-lg font-weight-bold text-gray-350 text-decoration-line-through">{currency(detail[0].price)}</span>
+                                        <span className="ml-1 font-size-h5 font-weight-bolder text-primary">{currency(detail[0].real_price)}</span>
                                         <span className="font-size-sm ml-1">(In Stock)</span>
                                     </div>
                                     {/* Form */}

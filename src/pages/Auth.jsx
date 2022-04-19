@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Form from '../../components/Form/Form'
-import Input from '../../components/Input/Input'
-import Button from '../../components/Button/Button'
+import Form from '../components/Form/Form'
+import Input from '../components/Input/Input'
+import Button from '../components/Button/Button'
 import { Navigate } from 'react-router-dom'
-import { actionFetchLogin } from '../../store/auth'
+import { actionFetchLogin } from '../store/auth'
 
 export default function Auth() {
     const formRegister = Form.useForm()
