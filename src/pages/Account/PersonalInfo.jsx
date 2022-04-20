@@ -1,16 +1,28 @@
 import React from 'react'
-import Form from '../../components/Form/Form'
-import Button from '../../components/Button/Button'
 
 export default function PersonalInfo() {
     return (
         <div className="col-12 col-md-9 col-lg-8 offset-lg-1">
             {/* Form */}
-            <Form>
+            <form>
                 <div className="row">
-                    <div className="col-12 col-md-12">
+                    <div className="col-12 col-md-6">
                         {/* Email */}
-
+                        <div className="form-group">
+                            <label htmlFor="accountFirstName">
+                                First Name *
+                            </label>
+                            <input className="form-control form-control-sm" id="accountFirstName" type="text" placeholder="First Name *" defaultValue="Daniel" required />
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-6">
+                        {/* Email */}
+                        <div className="form-group">
+                            <label htmlFor="accountLastName">
+                                Last Name *
+                            </label>
+                            <input className="form-control form-control-sm" id="accountLastName" type="text" placeholder="Last Name *" defaultValue="Robinson" required />
+                        </div>
                     </div>
                     <div className="col-12">
                         {/* Email */}
@@ -98,10 +110,10 @@ export default function PersonalInfo() {
                     </div>
                     <div className="col-12">
                         {/* Button */}
-                        <Button className="btn btn-dark" type="submit">Save Changes</Button>
+                        <button className="btn btn-dark" type="submit">Save Changes</button>
                     </div>
                 </div>
-            </Form>
+            </form>
         </div>
 
     )
