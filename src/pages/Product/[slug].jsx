@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import Slider from '../../components/Slider/Slider'
 import Tab from '../../components/Tab/Tab'
 import { HOME_PATH } from '../../constants/path'
 import useQuery from '../../hooks/useQuery'
@@ -28,7 +29,7 @@ export default function ProductDetail() {
 
     console.log(detail);
 
-    if(loading){
+    if (loading) {
         return null
     }
 
@@ -71,21 +72,21 @@ export default function ProductDetail() {
                                         {/* Slider */}
                                         <div className="mb-4" data-flickity="{&quot;draggable&quot;: false, &quot;fade&quot;: true}" id="productSlider">
                                             {/* Item */}
-                                            <a href="/img/products/product-7.jpg" data-fancybox>
-                                                <img src="/img/products/product-7.jpg" alt="..." className="card-img-top" />
+                                            <a href={detail[0].images[0].large_url} data-fancybox>
+                                                <img src={detail[0].thumbnail_url} alt="..." className="card-img-top" />
                                             </a>
                                             {/* Item */}
-                                            <a href="/img/products/product-122.jpg" data-fancybox>
+                                            {/* <a href="/img/products/product-122.jpg" data-fancybox>
                                                 <img src="/img/products/product-122.jpg" alt="..." className="card-img-top" />
-                                            </a>
+                                            </a> */}
                                             {/* Item */}
-                                            <a href="/img/products/product-146.jpg" data-fancybox>
+                                            {/* <a href="/img/products/product-146.jpg" data-fancybox>
                                                 <img src="/img/products/product-146.jpg" alt="..." className="card-img-top" />
-                                            </a>
+                                            </a> */}
                                         </div>
                                     </div>
                                     {/* Slider */}
-                                    <div className="flickity-nav mx-n2 mb-10 mb-md-0" data-flickity="{&quot;asNavFor&quot;: &quot;#productSlider&quot;, &quot;contain&quot;: true, &quot;wrapAround&quot;: false}">
+                                    <Slider spaceBetween={0}>
                                         {/* Item */}
                                         <div className="col-12 px-2" style={{ maxWidth: 113 }}>
                                             {/* Image */}
@@ -101,7 +102,7 @@ export default function ProductDetail() {
                                             {/* Image */}
                                             <div className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-146.jpg)' }} />
                                         </div>
-                                    </div>
+                                    </Slider>
                                 </div>
                                 <div className="col-12 col-md-6 pl-lg-10">
                                     {/* Header */}
@@ -316,11 +317,7 @@ export default function ProductDetail() {
                                                     <div className="col-12">
                                                         {/* Text */}
                                                         <p className="text-gray-500">
-                                                            Won't herb first male seas, beast. Let upon, female upon third fifth every. Man subdue rule
-                                                            after years herb after
-                                                            form. And image may, morning. Behold in tree day sea that together cattle whose. Fifth gathering
-                                                            brought
-                                                            bearing. Abundantly creeping whose. Beginning form have void two. A whose.
+                                                            {detail[0].short_description}
                                                         </p>
                                                     </div>
                                                     <div className="col-12 col-md-6">
