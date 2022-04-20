@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { Thumbs } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import Slider from '../../components/Slider/Slider'
 import Tab from '../../components/Tab/Tab'
-import { HOME_PATH } from '../../constants/path'
 import useQuery from '../../hooks/useQuery'
 import { productService } from '../../services/productService'
 import { currency } from '../../utils/number'
 
 export default function ProductDetail() {
+    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
     // const [tabActive, setTabActive] = useState(0)
     // const [tabShow, setTabShow] = useState(0)
 
@@ -32,6 +35,7 @@ export default function ProductDetail() {
     if (loading) {
         return null
     }
+
 
     return (
         <div>
@@ -70,39 +74,45 @@ export default function ProductDetail() {
                                             Sale
                                         </div>
                                         {/* Slider */}
-                                        <div className="mb-4" data-flickity="{&quot;draggable&quot;: false, &quot;fade&quot;: true}" id="productSlider">
-                                            {/* Item */}
-                                            <a href={detail[0].images[0].large_url} data-fancybox>
-                                                <img src={detail[0].thumbnail_url} alt="..." className="card-img-top" />
-                                            </a>
-                                            {/* Item */}
-                                            {/* <a href="/img/products/product-122.jpg" data-fancybox>
-                                                <img src="/img/products/product-122.jpg" alt="..." className="card-img-top" />
-                                            </a> */}
-                                            {/* Item */}
-                                            {/* <a href="/img/products/product-146.jpg" data-fancybox>
-                                                <img src="/img/products/product-146.jpg" alt="..." className="card-img-top" />
-                                            </a> */}
-                                        </div>
+                                        <Swiper modules={[Thumbs]} thumbs={{ swiper: thumbsSwiper }} style={{ width: '100% ' }}>
+                                            <SwiperSlide>
+                                                <a href={detail[0].images[0].large_url} data-fancybox>
+                                                    <img src={detail[0].thumbnail_url} alt="..." className="card-img-top" />
+                                                </a>
+                                            </SwiperSlide>
+                                            <SwiperSlide>
+                                                <a href="/img/products/product-122.jpg" data-fancybox>
+                                                    <img src="/img/products/product-122.jpg" alt="..." className="card-img-top" />
+                                                </a>
+                                            </SwiperSlide>
+                                            <SwiperSlide>
+                                                <a href="/img/products/product-146.jpg" data-fancybox>
+                                                    <img src="/img/products/product-146.jpg" alt="..." className="card-img-top" />
+                                                </a>
+                                            </SwiperSlide>
+                                        </Swiper>
                                     </div>
                                     {/* Slider */}
-                                    <Slider spaceBetween={0}>
-                                        {/* Item */}
-                                        <div className="col-12 px-2" style={{ maxWidth: 113 }}>
-                                            {/* Image */}
-                                            <div className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-7.jpg)' }} />
-                                        </div>
-                                        {/* Item */}
-                                        <div className="col-12 px-2" style={{ maxWidth: 113 }}>
-                                            {/* Image */}
-                                            <div className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-122.jpg)' }} />
-                                        </div>
-                                        {/* Item */}
-                                        <div className="col-12 px-2" style={{ maxWidth: 113 }}>
-                                            {/* Image */}
-                                            <div className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-146.jpg)' }} />
-                                        </div>
-                                    </Slider>
+                                    <Swiper modules={[Thumbs]}
+                                        watchSlidesProgress
+                                        onSwiper={setThumbsSwiper}
+                                    >
+                                        <SwiperSlide style={{ maxWidth: 113 }}>
+                                            <div className="col-12 px-2" >
+                                                <div className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-7.jpg)' }} />
+                                            </div>
+                                        </SwiperSlide>
+                                        <SwiperSlide style={{ maxWidth: 113 }}>
+                                            <div className="col-12 px-2" >
+                                                <div className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-122.jpg)' }} />
+                                            </div>
+                                        </SwiperSlide>
+                                        <SwiperSlide  style={{ maxWidth: 113 }}>
+                                            <div className="col-12 px-2">
+                                                <div className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-146.jpg)' }} />
+                                            </div>
+                                        </SwiperSlide>
+                                    </Swiper>
                                 </div>
                                 <div className="col-12 col-md-6 pl-lg-10">
                                     {/* Header */}
