@@ -1,45 +1,61 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Form from '../../components/Form/Form'
 import Button from '../../components/Button/Button'
+import Input from '../../components/Input/Input'
+import { useToggle } from '../../hooks/useToggle'
+import validate from '../../utils/validate'
+import { useSelector } from 'react-redux'
 
 export default function PersonalInfo() {
+    const { user } = useSelector(store => store.user)
+    const isFetchUpdate = useToggle()
+    const form = Form.useForm()
+    useEffect(() => {
+        form.setValues(user)
+    }, [user])
+
+    const onFinish = (values) => {
+        isFetchUpdate.setTrue()
+        if (values.oldPassword) {
+            const errors = validate(values, {
+                oldPassword: [],
+                newPassword: []
+            })
+
+            form.setErrors(errors)
+            if (Object.keys(errors).length === 0) {
+
+            }
+        }
+    }
     return (
         <div className="col-12 col-md-9 col-lg-8 offset-lg-1">
             {/* Form */}
-            <Form>
+            <Form onFinish={onFinish} >
                 <div className="row">
                     <div className="col-12 col-md-12">
                         {/* Email */}
-                        <Form.Item>
-                            
+                        <Form.Item name="name">
+                            <Input placeholder="Full Name" />
                         </Form.Item>
                     </div>
-                    <div className="col-12">
+                    <div className="col-12 col-md-12">
                         {/* Email */}
-                        <div className="form-group">
-                            <label htmlFor="accountEmail">
-                                Email Address *
-                            </label>
-                            <input className="form-control form-control-sm" id="accountEmail" type="email" placeholder="Email Address *" defaultValue="user@email.com" required />
-                        </div>
+                        <Form.Item name="username">
+                            <Input disabled />
+                        </Form.Item>
                     </div>
                     <div className="col-12 col-md-6">
                         {/* Password */}
-                        <div className="form-group">
-                            <label htmlFor="accountPassword">
-                                Current Password *
-                            </label>
-                            <input className="form-control form-control-sm" id="accountPassword" type="password" placeholder="Current Password *" required />
-                        </div>
+                        <Form.Item name="oldPassword">
+                            <Input type='password' placeholder="Current Password" />
+                        </Form.Item>
                     </div>
                     <div className="col-12 col-md-6">
                         {/* Password */}
-                        <div className="form-group">
-                            <label htmlFor="AccountNewPassword">
-                                New Password *
-                            </label>
-                            <input className="form-control form-control-sm" id="AccountNewPassword" type="password" placeholder="New Password *" required />
-                        </div>
+                        <Form.Item name="newPassword">
+                            <Input type='password' placeholder="New Password" />
+                        </Form.Item>
                     </div>
                     <div className="col-12 col-lg-6">
                         {/* Birthday */}

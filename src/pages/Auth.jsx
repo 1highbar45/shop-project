@@ -6,6 +6,7 @@ import Button from '../components/Button/Button'
 import { Navigate } from 'react-router-dom'
 import { actionFetchLogin, actionFetchRegister } from '../store/auth'
 import { useToggle } from '../hooks/useToggle'
+import { message } from 'antd'
 
 export default function Auth() {
     const formRegister = Form.useForm()
@@ -21,9 +22,11 @@ export default function Auth() {
         isFetchLogin.setTrue()
         dispatch(actionFetchLogin({
             data: form,
-            success(){},
-            error(error){},
-            end(){
+            success() {
+                message.success('Welcome back')
+            },
+            error(error) { },
+            end() {
                 isFetchLogin.setFalse()
             }
         }))
@@ -33,8 +36,8 @@ export default function Auth() {
         isFetchRegister.setTrue()
         dispatch(actionFetchRegister({
             data: form,
-            success(){},
-            error(error){},
+            success() { },
+            error(error) { },
             end() {
                 isFetchRegister.setFalse()
             },
@@ -110,10 +113,10 @@ export default function Auth() {
                                         </div>
                                         <div className="col-12">
                                             {/* Button */}
-                                            <Button 
-                                            // loading={isFetchLogin} 
-                                            loading={isFetchLogin.value} 
-                                            className="btn btn-sm btn-dark" type="submit">
+                                            <Button
+                                                // loading={isFetchLogin} 
+                                                loading={isFetchLogin.value}
+                                                className="btn btn-sm btn-dark" type="submit">
                                                 Sign In
                                             </Button>
                                         </div>
