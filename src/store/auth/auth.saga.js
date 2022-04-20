@@ -3,6 +3,7 @@ import { actionFetchLogin, actionLogout, authActions } from ".";
 import { actionFetchUser } from "../user";
 import { authService } from "../../services/authService"
 import { clearToken, clearUser, setToken } from "../../utils/token"
+import { actionFetchCart } from "../cart";
 
 function* fetchLogin(action) {
     try {
@@ -17,6 +18,7 @@ function* fetchLogin(action) {
 
         setToken(res.data)
         yield put(actionFetchUser())
+        yield put(actionFetchCart())
 
         // const user = yield call(userService.getInfo)
         // setUser(user.data)
