@@ -143,48 +143,24 @@ export default function Auth() {
                                             <Form.Item name='name' label='Full Name *'>
                                                 <Input placeholder="Full Name *" />
                                             </Form.Item>
-                                            {/* <div className="form-group">
-                                                <label className="sr-only" htmlFor="registerFirstName">
-                                                    First Name *
-                                                </label>
-                                                <input className="form-control form-control-sm" id="registerFirstName" type="text" placeholder="First Name *" />
-                                            </div> */}
                                         </div>
                                         <div className="col-12">
                                             {/* Email */}
                                             <Form.Item name='username' label='Email Address *'>
                                                 <Input placeholder="Email Address *" />
                                             </Form.Item>
-                                            {/* <div className="form-group">
-                                                <label className="sr-only" htmlFor="registerEmail">
-                                                    Email Address *
-                                                </label>
-                                                <input className="form-control form-control-sm" id="registerEmail" type="email" placeholder="Email Address *" />
-                                            </div> */}
                                         </div>
                                         <div className="col-12 col-md-6">
                                             {/* Password */}
                                             <Form.Item name='password' label='Password *'>
                                                 <Input type="password" placeholder="Password *" />
                                             </Form.Item>
-                                            {/* <div className="form-group">
-                                                <label className="sr-only" htmlFor="registerPassword">
-                                                    Password *
-                                                </label>
-                                                <input className="form-control form-control-sm" id="registerPassword" type="password" placeholder="Password *" />
-                                            </div> */}
                                         </div>
                                         <div className="col-12 col-md-6">
                                             {/* Password */}
                                             <Form.Item name='confirmPassword' label='Confirm Password *'>
                                                 <Input type="password" placeholder="Confirm Password *" />
                                             </Form.Item>
-                                            {/* <div className="form-group">
-                                                <label className="sr-only" htmlFor="registerPasswordConfirm">
-                                                    Confirm Password *
-                                                </label>
-                                                <input className="form-control form-control-sm" id="registerPasswordConfirm" type="password" placeholder="Confrm Password *" />
-                                            </div> */}
                                         </div>
                                         <div className="col-12 col-md-auto">
                                             {/* Link */}

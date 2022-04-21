@@ -2,6 +2,7 @@ import api from "../constants/api"
 
 export const authService = {
     login(data) {
+        // console.log('login', data);
         return api.post('/login', data)
     },
 
