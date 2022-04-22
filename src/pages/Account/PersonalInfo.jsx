@@ -4,11 +4,14 @@ import Button from '../../components/Button/Button'
 import Input from '../../components/Input/Input'
 import { useToggle } from '../../hooks/useToggle'
 import validate from '../../utils/validate'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { actionFetchChangePassword, actionFetchUpdateInfo } from '../../store/user'
+import { message } from 'antd'
 
 export default function PersonalInfo() {
     const { user } = useSelector(store => store.user)
     const isFetchUpdate = useToggle()
+    const dispatch = useDispatch()
     const form = Form.useForm()
     useEffect(() => {
         form.setValues(user)
@@ -16,22 +19,49 @@ export default function PersonalInfo() {
 
     const onFinish = (values) => {
         isFetchUpdate.setTrue()
+        form.setErrors({ oldPassword: '', newPassword: '' })
         if (values.oldPassword) {
             const errors = validate(values, {
                 oldPassword: [],
                 newPassword: []
             })
 
-            form.setErrors(errors)
-            if (Object.keys(errors).length === 0) {
+            // form.setErrors(errors)
+            // if (Object.keys(errors).length === 0) {
+            dispatch(actionFetchChangePassword({
+                data: {
+                    oldPassword: values.oldPassword,
+                    newPassword: values.newPassword
+                },
+                error(error) {
+                    message.error(error)
+                },
+                success() {
+                    message.success('Change password success')
+                },
+            }))
+            // }
 
-            }
+            dispatch(actionFetchUpdateInfo({
+                data: {
+                    ...values, newPassword: undefined, oldPassword: undefined
+                },
+                error(error) {
+                    message.error(error)
+                },
+                success() {
+                    message.success('Update info success')
+                },
+                end() {
+                    isFetchUpdate.setFalse()
+                }
+            }))
         }
     }
     return (
         <div className="col-12 col-md-9 col-lg-8 offset-lg-1">
             {/* Form */}
-            <Form onFinish={onFinish} >
+            <Form onFinish={onFinish} form={form}>
                 <div className="row">
                     <div className="col-12 col-md-12">
                         {/* Email */}

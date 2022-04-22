@@ -36,7 +36,9 @@ export default function Auth() {
         isFetchRegister.setTrue()
         dispatch(actionFetchRegister({
             data: form,
-            success() { },
+            success() {
+                message.success('Register success')
+            },
             error(error) { },
             end() {
                 isFetchRegister.setFalse()
