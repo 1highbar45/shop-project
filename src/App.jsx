@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
-import Blog from './pages/blog/Blog'
 import Contact from './pages/contact-us/Contact'
 import About from './pages/about/About'
 import FaQ from './pages/faq/FaQ'
@@ -27,6 +26,7 @@ import vi from './locals/vi.json'
 import en from './locals/en.json'
 import Page404 from './pages/Page404/Page404'
 import BlogPost from './pages/blog/[slug]'
+import Blog from './pages/blog/Blog'
 
 function App() {
 
