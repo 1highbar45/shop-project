@@ -28,9 +28,11 @@ export default function ProductDetail() {
 
     console.log(detail);
 
-    if(loading){
+    if (loading) {
         return null
     }
+
+
 
     return (
         <div>
@@ -39,16 +41,15 @@ export default function ProductDetail() {
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            {/* Breadcrumb */}
                             <ol className="breadcrumb mb-0 font-size-xs text-gray-400">
                                 <li className="breadcrumb-item">
                                     <a className="text-gray-400" href="index.html">Home</a>
                                 </li>
                                 <li className="breadcrumb-item">
-                                    <a className="text-gray-400" href="shop.html">Women's Shoes</a>
+                                    <a className="text-gray-400" href="shop.html">Shop</a>
                                 </li>
                                 <li className="breadcrumb-item active">
-                                    Leather Sneakers
+                                    {detail[0].name}
                                 </li>
                             </ol>
                         </div>
@@ -71,35 +72,9 @@ export default function ProductDetail() {
                                         {/* Slider */}
                                         <div className="mb-4" data-flickity="{&quot;draggable&quot;: false, &quot;fade&quot;: true}" id="productSlider">
                                             {/* Item */}
-                                            <a href="/img/products/product-7.jpg" data-fancybox>
-                                                <img src="/img/products/product-7.jpg" alt="..." className="card-img-top" />
+                                            <a href={detail[0]?.images[0]?.large_url} data-fancybox>
+                                                <img src={detail[0]?.images[0]?.large_url} alt="..." className="card-img-top" />
                                             </a>
-                                            {/* Item */}
-                                            <a href="/img/products/product-122.jpg" data-fancybox>
-                                                <img src="/img/products/product-122.jpg" alt="..." className="card-img-top" />
-                                            </a>
-                                            {/* Item */}
-                                            <a href="/img/products/product-146.jpg" data-fancybox>
-                                                <img src="/img/products/product-146.jpg" alt="..." className="card-img-top" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                    {/* Slider */}
-                                    <div className="flickity-nav mx-n2 mb-10 mb-md-0" data-flickity="{&quot;asNavFor&quot;: &quot;#productSlider&quot;, &quot;contain&quot;: true, &quot;wrapAround&quot;: false}">
-                                        {/* Item */}
-                                        <div className="col-12 px-2" style={{ maxWidth: 113 }}>
-                                            {/* Image */}
-                                            <div className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-7.jpg)' }} />
-                                        </div>
-                                        {/* Item */}
-                                        <div className="col-12 px-2" style={{ maxWidth: 113 }}>
-                                            {/* Image */}
-                                            <div className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-122.jpg)' }} />
-                                        </div>
-                                        {/* Item */}
-                                        <div className="col-12 px-2" style={{ maxWidth: 113 }}>
-                                            {/* Image */}
-                                            <div className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-146.jpg)' }} />
                                         </div>
                                     </div>
                                 </div>
@@ -108,11 +83,11 @@ export default function ProductDetail() {
                                     <div className="row mb-1">
                                         <div className="col">
                                             {/* Preheading */}
-                                            <a className="text-muted" href="shop.html">Sneakers</a>
+                                            {/* <a className="text-muted" href="shop.html">Sneakers</a> */}
                                         </div>
                                         <div className="col-auto">
                                             {/* Rating */}
-                                            <div className="rating font-size-xs text-dark" data-value={4}>
+                                            <div className="rating font-size-xs text-dark" data-value={detail[0].rating_average}>
                                                 <div className="rating-item">
                                                     <i className="fas fa-star" />
                                                 </div>
@@ -140,100 +115,23 @@ export default function ProductDetail() {
                                     <div className="mb-7">
                                         <span className="font-size-lg font-weight-bold text-gray-350 text-decoration-line-through">{currency(detail[0].price)}</span>
                                         <span className="ml-1 font-size-h5 font-weight-bolder text-primary">{currency(detail[0].real_price)}</span>
-                                        <span className="font-size-sm ml-1">(In Stock)</span>
+                                        <span className="font-size-sm ml-1">(
+                                            {detail[0].stock_item.qty > 0
+                                                ? "In Stock"
+                                                : "Out of Stock"}
+                                            )
+                                        </span>
                                     </div>
                                     {/* Form */}
                                     <form>
                                         <div className="form-group">
-                                            {/* Label */}
-                                            <p className="mb-5">
-                                                Color: <strong id="colorCaption">White</strong>
-                                            </p>
-                                            {/* Radio */}
-                                            <div className="mb-8 ml-n1">
-                                                <div className="custom-control custom-control-inline custom-control-img">
-                                                    <input type="radio" className="custom-control-input" id="imgRadioOne" name="imgRadio" data-toggle="form-caption" data-target="#colorCaption" defaultValue="White" defaultChecked />
-                                                    <label className="custom-control-label" htmlFor="imgRadioOne">
-                                                        <span className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-7.jpg)' }} />
-                                                    </label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-img">
-                                                    <input type="radio" className="custom-control-input" id="imgRadioTwo" name="imgRadio" data-toggle="form-caption" data-target="#colorCaption" defaultValue="Black" />
-                                                    <label className="custom-control-label" htmlFor="imgRadioTwo">
-                                                        <span className="embed-responsive embed-responsive-1by1 bg-cover" style={{ backgroundImage: 'url(/img/products/product-49.jpg)' }} />
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            {/* Label */}
-                                            <p className="mb-5">
-                                                Size: <strong><span id="sizeCaption">7.5</span> US</strong>
-                                            </p>
                                             {/* Radio */}
                                             <div className="mb-2">
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioOne" defaultValue={6} data-toggle="form-caption" data-target="#sizeCaption" />
+                                                {/* <div className="custom-control custom-control-inline custom-control-size mb-2">
+                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioOne" defaultValue={6} data-toggle="form-caption" data-target="#sizeCaption" defaultChecked/>
                                                     <label className="custom-control-label" htmlFor="sizeRadioOne">6</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioTwo" defaultValue="6.5" data-toggle="form-caption" data-target="#sizeCaption" disabled />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioTwo">6.5</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioThree" defaultValue={7} data-toggle="form-caption" data-target="#sizeCaption" />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioThree">7</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioFour" defaultValue="7.5" data-toggle="form-caption" data-target="#sizeCaption" defaultChecked />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioFour">7.5</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioFive" defaultValue={8} data-toggle="form-caption" data-target="#sizeCaption" />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioFive">8</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioSix" defaultValue="8.5" data-toggle="form-caption" data-target="#sizeCaption" />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioSix">8.5</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioSeven" defaultValue={9} data-toggle="form-caption" data-target="#sizeCaption" disabled />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioSeven">9</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioEight" defaultValue="9.5" data-toggle="form-caption" data-target="#sizeCaption" disabled />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioEight">9.5</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioNine" defaultValue={10} data-toggle="form-caption" data-target="#sizeCaption" />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioNine">10</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioTen" defaultValue="10.5" data-toggle="form-caption" data-target="#sizeCaption" />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioTen">10.5</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioEleven" defaultValue={11} data-toggle="form-caption" data-target="#sizeCaption" />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioEleven">11</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioTwelve" defaultValue={12} data-toggle="form-caption" data-target="#sizeCaption" />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioTwelve">12</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioThirteen" defaultValue={13} data-toggle="form-caption" data-target="#sizeCaption" />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioThirteen">13</label>
-                                                </div>
-                                                <div className="custom-control custom-control-inline custom-control-size mb-2">
-                                                    <input type="radio" className="custom-control-input" name="sizeRadio" id="sizeRadioFourteen" defaultValue={14} data-toggle="form-caption" data-target="#sizeCaption" />
-                                                    <label className="custom-control-label" htmlFor="sizeRadioFourteen">14</label>
-                                                </div>
+                                                </div> */}
                                             </div>
-                                            {/* Size chart */}
-                                            <p className="mb-8">
-                                                <img src="/img/icons/icon-ruler.svg" alt="..." className="img-fluid" /> <a className="text-reset text-decoration-underline ml-3" data-toggle="modal" href="#modalSizeChart">Size
-                                                    chart</a>
-                                            </p>
                                             <div className="form-row mb-7">
                                                 <div className="col-12 col-lg-auto">
                                                     {/* Quantity */}
@@ -316,41 +214,23 @@ export default function ProductDetail() {
                                                     <div className="col-12">
                                                         {/* Text */}
                                                         <p className="text-gray-500">
-                                                            Won't herb first male seas, beast. Let upon, female upon third fifth every. Man subdue rule
-                                                            after years herb after
-                                                            form. And image may, morning. Behold in tree day sea that together cattle whose. Fifth gathering
-                                                            brought
-                                                            bearing. Abundantly creeping whose. Beginning form have void two. A whose.
+                                                            {detail[0].short_description}
                                                         </p>
                                                     </div>
-                                                    <div className="col-12 col-md-6">
-                                                        {/* List */}
-                                                        <ul className="list list-unstyled mb-md-0 text-gray-500">
-                                                            <li>
-                                                                <strong className="text-body">SKU</strong>: #61590437
-                                                            </li>
-                                                            <li>
-                                                                <strong className="text-body">Occasion</strong>: Lifestyle, Sport
-                                                            </li>
-                                                            <li>
-                                                                <strong className="text-body">Country</strong>: Italy
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="col-12 col-md-6">
-                                                        {/* List */}
-                                                        <ul className="list list-unstyled mb-0">
-                                                            <li>
-                                                                <strong>Outer</strong>: Leather 100%, Polyamide 100%
-                                                            </li>
-                                                            <li>
-                                                                <strong>Lining</strong>: Polyester 100%
-                                                            </li>
-                                                            <li>
-                                                                <strong>CounSoletry</strong>: Rubber 100%
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                    {detail[0].specifications?.map((element, index) => (
+                                                        <div className="col-12 col-md-6" key={index}>
+                                                            {/* List */}
+                                                            <ul className="list list-unstyled mb-md-0 text-gray-500">
+                                                                {
+                                                                    element.attributes?.map((e, i) => (
+                                                                        <li key={i}>
+                                                                            <strong className="text-body">{e.name}</strong>: {e.value}
+                                                                        </li>
+                                                                    ))
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
