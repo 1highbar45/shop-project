@@ -1,6 +1,8 @@
 import React from 'react'
+import { generatePath, Link } from 'react-router-dom'
+import { BLOG_POST_PATH } from '../../constants/path'
 
-export default function Blog() {
+export default function Blog({ slug }) {
     return (
         <div>
             {/* BREADCRUMB */}
@@ -58,9 +60,9 @@ export default function Blog() {
                                         day let over gathered, grass face one every light of under.
                                     </p>
                                     {/* Button */}
-                                    <a className="btn btn-link stretched-link px-0 text-reset" href="blog-post.html">
+                                    <Link className="btn btn-link stretched-link px-0 text-reset" to={BLOG_POST_PATH}>
                                         Read More <i className="fe fe-arrow-right ml-2" />
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

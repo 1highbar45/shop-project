@@ -302,7 +302,6 @@ export default function BlogPost() {
                     </div>
                 </div>
             </section>
-
         </div>
     )
 }
