@@ -25,8 +25,8 @@ import store from './store'
 import vi from './locals/vi.json'
 import en from './locals/en.json'
 import Page404 from './pages/Page404/Page404'
-// import BlogPost from './pages/blog/[slug]'
-// import Blog from './pages/blog/Blog'
+import BlogPost from './pages/blog/[slug]'
+import Blog from './pages/blog/Blog'
 
 function App() {
 
@@ -40,8 +40,8 @@ function App() {
           <Route path='/contact-us' element={<Contact />} />
           <Route path='/faq' element={<FaQ />} />
           <Route path='/404' element={<Page404 />} />
-          {/* <Route path={BLOG_PATH} element={<Blog />} /> */}
-          {/* <Route path={BLOG_POST_PATH} element={<BlogPost />} /> */}
+          <Route path={BLOG_PATH} element={<Blog />} />
+          <Route path={BLOG_POST_PATH} element={<BlogPost />} />
           <Route path='/store-locator' element={<StoreLocator />} />
           <Route path='/order-completed' element={<OrderCompleted />} />
           <Route path='/shipping-and-returns' element={<ShippingAndReturns />} />
