@@ -14,7 +14,7 @@ import Address from './pages/account/address/Address.jsx'
 import Order from './pages/account/order/Order.jsx'
 import PersonalInfo from './pages/account/PersonalInfo.jsx'
 import Payment from './pages/account/payment/Payment.jsx'
-import Product from './pages/Product/Product.jsx'
+import Product from './pages/product/Product.jsx'
 import Wishlist from './pages/account/Wishlist/Wishlist.jsx'
 import ProductDetail from './pages/product/[slug].jsx'
 import Home from './pages/Home.jsx'
@@ -36,7 +36,7 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path={HOME_PATH} element={<Home />} />
-          {/* <Route path='/about' element={<About />} /> */}
+          <Route path='/about' element={<About />} />
           <Route path='/contact-us' element={<Contact />} />
           <Route path='/faq' element={<FaQ />} />
           <Route path='/404' element={<Page404 />} />
