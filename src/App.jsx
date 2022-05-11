@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import Contact from './pages/contact-us/Contact'
-import About from './pages/about/About'
+// import About from './pages/about/About'
 import FaQ from './pages/faq/FaQ'
 import ComingSoon from './pages/comingsoon/ComingSoon'
 import StoreLocator from './pages/locator/StoreLocator'
@@ -36,7 +36,7 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path={HOME_PATH} element={<Home />} />
-          <Route path='/about' element={<About />} />
+          {/* <Route path='/about' element={<About />} /> */}
           <Route path='/contact-us' element={<Contact />} />
           <Route path='/faq' element={<FaQ />} />
           <Route path='/404' element={<Page404 />} />
