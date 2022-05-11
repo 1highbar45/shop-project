@@ -24,7 +24,7 @@ import { AppProvider } from './core'
 import store from './store'
 import vi from './locals/vi.json'
 import en from './locals/en.json'
-import Page404 from './pages/Page404/Page404.jsx'
+import Page404 from './pages/page404/Page404.jsx'
 import BlogPost from './pages/blog/[slug].jsx'
 import Blog from './pages/blog/Blog.jsx'
 
