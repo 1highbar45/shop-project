@@ -69,22 +69,7 @@ export default function MainNav() {
                             </li>
                             <li className="nav-item dropdown">
                                 {/* Toggle */}
-                                <a className="nav-link" data-toggle="dropdown" href="#">Blog</a>
-                                {/* Menu */}
-                                <div className="dropdown-menu">
-                                    <div className="card card-lg">
-                                        <div className="card-body">
-                                            <ul className="list-styled font-size-sm">
-                                                <li className="list-styled-item">
-                                                    <Link className="list-styled-link" to="/blog">Blog</Link>
-                                                </li>
-                                                <li className="list-styled-item">
-                                                    <Link className="list-styled-link" to="/blog-post">Blog Post</Link>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                <Link className="nav-link" to="/blog">Blog</Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="docs/getting-started.html">Docs</a>
