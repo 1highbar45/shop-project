@@ -4,14 +4,21 @@ import SearchModal from '../SearchModal/SearchModal'
 import { useToggle } from '../../hooks/useToggle'
 import { HOME_PATH, PRODUCT_PATH } from '../../constants/path'
 import { useTranslate } from '../../core/components/TranslateProvider'
+import CartModal from '../CartModal/CartModal'
 
 export default function MainNav() {
     const isShowSearchModal = useToggle()
+    const isShowCartModal = useToggle()
     const { _t } = useTranslate()
 
     const onOpenSearch = (ev) => {
         ev.preventDefault()
         isShowSearchModal.setTrue()
+    }
+
+    const onOpenCart = (ev) => {
+        ev.preventDefault()
+        isShowCartModal.setTrue()
     }
 
     return (
@@ -93,7 +100,7 @@ export default function MainNav() {
                                 </Link>
                             </li>
                             <li className="nav-item ml-lg-n4">
-                                <a className="nav-link" data-toggle="modal" href="#modalShoppingCart">
+                                <a className="nav-link" onClick={onOpenCart} data-toggle="modal" href="#modalShoppingCart">
                                     <span data-cart-items={2}>
                                         <i className="fe fe-shopping-cart" />
                                     </span>
@@ -104,6 +111,7 @@ export default function MainNav() {
                 </div>
             </nav>
             <SearchModal visible={isShowSearchModal.value} onClose={isShowSearchModal.setFalse} />
+            <CartModal visible={isShowCartModal.value} onClose={isShowCartModal.setFalse}/>
         </>
     )
 }
