@@ -24,6 +24,6 @@ export const profileService = {
         return api.post(`/ecommerce/v1/profile/address/${id}`)
     },
     deleteAddress(id) { 
-        return api.post(`/ecommerce/v1/profile/address/${id}`)
+        return api.delete(`/ecommerce/v1/profile/address/${id}`)
     },
 }
