@@ -758,15 +758,15 @@ export default function Product() {
                         {queryObj.q && <SearchWrap> Search results for '{queryObj.q}'</SearchWrap>}
                         {/* Products */}
                         <div className="row">
-                            {/* {productLoading ? [...Array(15)].map((_, i) => <ProductCardLoading key={i} />)
-                                : products?.data?.map(e => <ProductCard key={e.id} {...e} />)} */}
-                            <ListView
+                            {productLoading ? [...Array(15)].map((_, i) => <ProductCardLoading key={i} />)
+                                : products?.data?.map(e => <ProductCard key={e.id} {...e} />)}
+                            {/* <ListView
                                 LoadingComponent={ProductCardLoading}
                                 isLoading={productLoading}
                                 items={products}
                                 render={e => <ProductCard key={e.id} {...e} />}
                                 loadingCount={9}
-                            />
+                            /> */}
                         </div>
                         {/* Pagination */}
                         <Paginate totalPage={paginate?.totalPage} />

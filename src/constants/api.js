@@ -21,7 +21,7 @@ api.interceptors.response.use((res) => {
             const refresh = await authService.refreshToken({ refreshToken: token.refreshToken })
 
             if (refresh.data) {
-                token.accessToken = refresh.data.accessToken
+                token.accessToken = refresh?.data?.accessToken
                 setToken(token)
 
                 return api(error.config)
@@ -30,7 +30,7 @@ api.interceptors.response.use((res) => {
     }
 
     // accessToken mới thì có refreshToken ko mới 
-    return error.response.data.json();
+    return error?.response?.data.json();
 })
 
 api.interceptors.request.use((config) => {

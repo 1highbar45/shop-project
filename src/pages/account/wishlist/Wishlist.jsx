@@ -23,13 +23,17 @@ export default function Wishlist() {
             {/* Products */}
             <div className="row">
                 {/* Item */}
-                <ListView
+                {/* <ListView
                     LoadingComponent={ProductCardLoading}
                     isLoading={loading}
                     items={products}
                     render={e => <WishlistCard onRemoveWishlist={onRemoveWishlist} key={e.id} {...e.product} />}
                     loadingCount={6}
-                />
+                /> */}
+                {loading && ProductCardLoading ? [...Array(6)].map((_, i) => <ProductCardLoading key={i} />)
+                    : products?.map((e, i) => (
+                        <WishlistCard onRemoveWishlist={onRemoveWishlist} key={e.id} {...e.product} />
+                    ))}
             </div>
             {/* Pagination */}
             <Paginate totalPage={paginate?.totalPage} />
