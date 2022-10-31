@@ -13,10 +13,10 @@ const useQuery = (callback, dependencyList = [], initialValue = undefined) => {
         callback()
             .then(res => {
                 // console.log(res);
-                setData(res.data)
-                if (res.paginate) {
+                setData(res?.data)
+                if (res?.paginate) {
                     // setPaginate(res.data?.paginate)
-                    setPaginate(res.paginate)
+                    setPaginate(res?.paginate)
                 }
                 setLoading(false)
             })

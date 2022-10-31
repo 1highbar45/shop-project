@@ -17,11 +17,14 @@ export const profileService = {
     editAddress(id, data) {
         return api.put(`/ecommerce/v1/profile/address/${id}`, data)
     },
+    getAddressListDefault() {
+        return api.get(`/ecommerce/v1/profile/address/default`)
+    },
     getAddressList() {
-        return api.post(`/ecommerce/v1/profile/address/default`)
+        return api.get(`/ecommerce/v1/profile/address`)
     },
     getAddressDetail(id) {
-        return api.post(`/ecommerce/v1/profile/address/${id}`)
+        return api.get(`/ecommerce/v1/profile/address/${id}`)
     },
     deleteAddress(id) { 
         return api.delete(`/ecommerce/v1/profile/address/${id}`)

@@ -5,11 +5,13 @@ import { useToggle } from '../../hooks/useToggle'
 import { HOME_PATH, PRODUCT_PATH } from '../../constants/path'
 import { useTranslate } from '../../core/components/TranslateProvider'
 import CartModal from '../CartModal/CartModal'
+import { useSelector } from 'react-redux'
 
 export default function MainNav() {
     const isShowSearchModal = useToggle()
     const isShowCartModal = useToggle()
     const { _t } = useTranslate()
+    const cart = useSelector(store => store.cart)
 
     const onOpenSearch = (ev) => {
         ev.preventDefault()
@@ -101,7 +103,7 @@ export default function MainNav() {
                             </li>
                             <li className="nav-item ml-lg-n4">
                                 <a className="nav-link" onClick={onOpenCart} data-toggle="modal" href="#modalShoppingCart">
-                                    <span data-cart-items={2}>
+                                    <span data-cart-items={cart?.cart?.totalQuantity}>
                                         <i className="fe fe-shopping-cart" />
                                     </span>
                                 </a>
@@ -111,7 +113,7 @@ export default function MainNav() {
                 </div>
             </nav>
             <SearchModal visible={isShowSearchModal.value} onClose={isShowSearchModal.setFalse} />
-            <CartModal visible={isShowCartModal.value} onClose={isShowCartModal.setFalse}/>
+            <CartModal visible={isShowCartModal.value} onClose={isShowCartModal.setFalse} />
         </>
     )
 }

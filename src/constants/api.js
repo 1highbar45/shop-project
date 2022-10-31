@@ -21,7 +21,7 @@ api.interceptors.response.use((res) => {
             const refresh = await authService.refreshToken({ refreshToken: token.refreshToken })
 
             if (refresh.data) {
-                token.accessToken = refresh.data.accessToken
+                token.accessToken = refresh?.data?.accessToken
                 setToken(token)
 
                 return api(error.config)

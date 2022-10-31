@@ -5,13 +5,13 @@ export const cartService = {
         return api.get('/ecommerce/v1/cart')
     },
 
-    updateQuantity(quantity) {
-        return api.put(`/ecommerce/v1/cart/quantity`, {
+    updateQuantity(id, quantity) {
+        return api.put(`/ecommerce/v1/cart/quantity/${id}`, {
             quantity
         })
     },
 
     removeCart(id) {
-        return api.delete(`/ecommerce/v1/cart/${id}`)
+        return api.delete(`/ecommerce/v1/cart/remove-item/${id}`)
     }
 }

@@ -30,7 +30,7 @@ export default function Paginate({ totalPage }) {
 
         let list = []
         for (let i = start; i <= end; i++) {
-            list.push(<li className={`page-item ${currentPage === i ? 'active' : ''}`}>
+            list.push(<li className={`page-item ${currentPage === i ? 'active' : ''}`} key={i}>
                 <Link className="page-link" to={changeQueryURL({ ...objURL, page: i })}>{i}</Link>
             </li>)
         }

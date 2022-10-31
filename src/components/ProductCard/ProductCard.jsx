@@ -6,7 +6,7 @@ import { PRODUCT_DETAIL_PATH } from '../../constants/path';
 import { profileService } from '../../services/profileService';
 import { message } from 'antd';
 import { useDispatch } from 'react-redux';
-import { actionAddToCart } from '../../store/cart';
+import { cartService } from '../../services/cartService';
 
 export const ProductCardLoading = () => {
     return (
@@ -37,10 +37,16 @@ export const ProductCardLoading = () => {
     )
 }
 
-export default function ProductCard({ name, real_price, images, slug, _id }) {
+export default function ProductCard({ name, real_price, images, slug, _id, id }) {
     const dispatch = useDispatch()
-
     const productDetailPath = generatePath(PRODUCT_DETAIL_PATH, { slug })
+
+    const onClickAddCart = async () => {
+        const res = await cartService.updateQuantity(id, 1)
+        if (res.updateCount) {
+            message.success('Add cart success')
+        }
+    }
 
     const onClickAddWishlist = async () => {
         const res = await profileService.addWishList(_id)
@@ -48,7 +54,6 @@ export default function ProductCard({ name, real_price, images, slug, _id }) {
             message.success('Add product success')
         }
     }
-
 
     return (
         <div className="col-6 col-md-4">
@@ -73,7 +78,7 @@ export default function ProductCard({ name, real_price, images, slug, _id }) {
                             </button>
                         </span>
                         <span className="card-action">
-                            <button className="btn btn-xs btn-circle btn-white-primary" onClick={() => dispatch(actionAddToCart())} >
+                            <button className="btn btn-xs btn-circle btn-white-primary" onClick={onClickAddCart}>
                                 <i className="fe fe-shopping-cart" />
                             </button>
                         </span>
@@ -87,9 +92,9 @@ export default function ProductCard({ name, real_price, images, slug, _id }) {
                 {/* Body */}
                 <div className="card-body px-0">
                     {/* Category */}
-                    <div className="font-size-xs">
+                    {/* <div className="font-size-xs">
                         <a className="text-muted" href="shop.html">Shoes</a>
-                    </div>
+                    </div> */}
                     {/* Title */}
                     <div className="font-weight-bold">
                         <Link className="text-body" to={productDetailPath}>

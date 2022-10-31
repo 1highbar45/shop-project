@@ -759,7 +759,7 @@ export default function Product() {
                         {/* Products */}
                         <div className="row">
                             {/* {productLoading ? [...Array(15)].map((_, i) => <ProductCardLoading key={i} />)
-                                : products?.data?.map(e => <ProductCard key={e.id} {...e} />)} */}
+                                : products?.map(e => <ProductCard key={e.id} {...e} />)} */}
                             <ListView
                                 LoadingComponent={ProductCardLoading}
                                 isLoading={productLoading}

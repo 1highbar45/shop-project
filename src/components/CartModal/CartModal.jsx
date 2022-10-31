@@ -1,7 +1,41 @@
-import { Drawer } from 'antd'
-import React from 'react'
+import { Drawer, message, Select } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import useQuery from '../../hooks/useQuery'
+import { cartService } from '../../services/cartService'
+import { fetchGetCart, fetchRemoveCart } from '../../store/cart/cartSlice'
+import { currency } from '../../utils/number'
 
 export default function CartModal({ visible, onClose }) {
+    const dispatch = useDispatch()
+    const [cart, setCart] = useState([])
+
+    async function getCart() {
+        let { payload } = await dispatch(fetchGetCart())
+        setCart(payload?.data)
+    }
+
+    useEffect(() => {
+        getCart();
+    }, [visible]);
+
+    const onRemoveCart = async (id) => {
+        const res = await cartService.removeCart(id)
+        if (res.updateCount) {
+            message.success('Remove cart success')
+            getCart()
+        }
+    }
+
+    const handleChangeQuantity = async (id, value) => {
+        const res = await cartService.updateQuantity(id, value)
+        if (res.updateCount) {
+            message.success('Update product quantity success')
+            getCart()
+        }
+    };
+
     return (
         <Drawer
             visible={visible}
@@ -21,70 +55,58 @@ export default function CartModal({ visible, onClose }) {
                         </button>
                         {/* Header*/}
                         <div className="modal-header line-height-fixed font-size-lg">
-                            <strong className="mx-auto">Your Cart (2)</strong>
+                            <strong className="mx-auto">Your Cart ({cart?.totalQuantity})</strong>
                         </div>
                         {/* List group */}
                         <ul className="list-group list-group-lg list-group-flush">
-                            <li className="list-group-item">
-                                <div className="row align-items-center">
-                                    <div className="col-4">
-                                        {/* Image */}
-                                        <a href="./product.html">
-                                            <img className="img-fluid" src="/img/products/product-6.jpg" alt="..." />
-                                        </a>
-                                    </div>
-                                    <div className="col-8">
-                                        {/* Title */}
-                                        <p className="font-size-sm font-weight-bold mb-6">
-                                            <a className="text-body" href="./product.html">Cotton floral print Dress</a> <br />
-                                            <span className="text-muted">$40.00</span>
-                                        </p>
-                                        {/*Footer */}
-                                        <div className="d-flex align-items-center">
-                                            {/* Select */}
-                                            <select className="custom-select custom-select-xxs w-auto">
-                                                <option value={1}>1</option>
-                                                <option value={1}>2</option>
-                                                <option value={1}>3</option>
-                                            </select>
-                                            {/* Remove */}
-                                            <a className="font-size-xs text-gray-400 ml-auto" href="#!">
-                                                <i className="fe fe-x" /> Remove
-                                            </a>
+                            {
+                                cart?.listItems?.map((e, i) => (
+                                    <li className="list-group-item" key={e?.product?.id}>
+                                        <div className="row align-items-center">
+                                            <div className="col-4">
+                                                {/* Image */}
+                                                <a href="./product.html">
+                                                    <img className="img-fluid" src={e?.product?.thumbnail_url} alt="..." />
+                                                </a>
+                                            </div>
+                                            <div className="col-8">
+                                                {/* Title */}
+                                                <p className="font-size-sm font-weight-bold mb-6">
+                                                    <a className="text-body" href="./product.html">{e?.product?.name}</a> <br />
+                                                    <span className="text-muted">{currency(e?.product?.price)}</span>
+                                                </p>
+                                                {/*Footer */}
+                                                <div className="d-flex align-items-center">
+                                                    {/* Select */}
+                                                    {/* <select className="custom-select custom-select-xxs w-auto">
+                                                        <option value={1}>1</option>
+                                                        <option value={2}>2</option>
+                                                        <option value={3}>3</option>
+                                                    </select> */}
+                                                    <Select
+                                                        defaultValue={e?.quantity}
+                                                        className="custom-select custom-select-xxs w-auto"
+                                                        onChange={(value) => handleChangeQuantity(e?.product?.id, value)}
+                                                    >
+                                                        <Select.Option value={1}>1</Select.Option>
+                                                        <Select.Option value={2}>2</Select.Option>
+                                                        <Select.Option value={3}>3</Select.Option>
+                                                        <Select.Option value={4}>4</Select.Option>
+                                                    </Select>
+                                                    {/* Remove */}
+                                                    <a
+                                                        className="font-size-xs text-gray-400 ml-auto"
+                                                        href="#!"
+                                                        onClick={() => onRemoveCart(e?.product?.id)}
+                                                    >
+                                                        <i className="fe fe-x" /> Remove
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="list-group-item">
-                                <div className="row align-items-center">
-                                    <div className="col-4">
-                                        {/* Image */}
-                                        <a href="./product.html">
-                                            <img className="img-fluid" src="/img/products/product-10.jpg" alt="..." />
-                                        </a>
-                                    </div>
-                                    <div className="col-8">
-                                        {/* Title */}
-                                        <p className="font-size-sm font-weight-bold mb-6">
-                                            <a className="text-body" href="./product.html">Suede cross body Bag</a> <br />
-                                            <span className="text-muted">$49.00</span>
-                                        </p>
-                                        {/*Footer */}
-                                        <div className="d-flex align-items-center">
-                                            {/* Select */}
-                                            <select className="custom-select custom-select-xxs w-auto">
-                                                <option value={1}>1</option>
-                                                <option value={1}>2</option>
-                                                <option value={1}>3</option>
-                                            </select>
-                                            {/* Remove */}
-                                            <a className="font-size-xs text-gray-400 ml-auto" href="#!">
-                                                <i className="fe fe-x" /> Remove
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                                    </li>
+                                ))
+                            }
                         </ul>
                         {/* Footer */}
                         <div className="modal-footer line-height-fixed font-size-sm bg-light mt-auto">
@@ -92,8 +114,8 @@ export default function CartModal({ visible, onClose }) {
                         </div>
                         {/* Buttons */}
                         <div className="modal-body">
-                            <a className="btn btn-block btn-dark" href="./checkout.html">Continue to Checkout</a>
-                            <a className="btn btn-block btn-outline-dark" href="./shopping-cart.html">View Cart</a>
+                            <Link className="btn btn-block btn-dark" to='/checkout' onClick={onClose}>Continue to Checkout</Link>
+                            {/* <a className="btn btn-block btn-outline-dark" href="./shopping-cart.html">View Cart</a> */}
                         </div>
                     </div>
                     {/* Empty cart (remove `.d-none` to enable it) */}
