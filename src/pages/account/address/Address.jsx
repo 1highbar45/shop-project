@@ -1,6 +1,11 @@
 import React from 'react'
+import useQuery from '../../../hooks/useQuery';
+import { profileService } from '../../../services/profileService'
 
 export default function Address() {
+    const { data: address, loading: addressLoading, paginate } = useQuery(() => profileService.getAddressList())
+    console.log(address);
+
     return (
         <div className="col-12 col-md-9 col-lg-8 offset-lg-1">
             <div className="row">

@@ -60,10 +60,10 @@ export default function Account({ path }) {
                                         to={`${path}`} end>
                                         Personal Info
                                     </NavLink>
-                                    <NavLink className="list-group-item list-group-item-action dropright-toggle "
+                                    {/* <NavLink className="list-group-item list-group-item-action dropright-toggle "
                                         to={`${path}/address`}>
                                         Addresses
-                                    </NavLink>
+                                    </NavLink> */}
                                     <NavLink className="list-group-item list-group-item-action dropright-toggle "
                                         to={`${path}/payment`}>
                                         Payment Methods

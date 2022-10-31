@@ -115,7 +115,7 @@ export default function CartModal({ visible, onClose }) {
                         {/* Buttons */}
                         <div className="modal-body">
                             <Link className="btn btn-block btn-dark" to='/checkout' onClick={onClose}>Continue to Checkout</Link>
-                            <a className="btn btn-block btn-outline-dark" href="./shopping-cart.html">View Cart</a>
+                            {/* <a className="btn btn-block btn-outline-dark" href="./shopping-cart.html">View Cart</a> */}
                         </div>
                     </div>
                     {/* Empty cart (remove `.d-none` to enable it) */}

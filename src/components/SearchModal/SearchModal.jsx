@@ -25,7 +25,6 @@ export default function SearchModal({ visible, onClose }) {
             // navigate('/product' + '?q=' + value)
             setIsLoading(true)
             const product = await productService.getProduct(`?name=${encodeURI(value)}&limit=5`)
-            // console.log(product);
             setProduct(product.data)
             setIsLoading(false)
         }
@@ -86,10 +85,10 @@ export default function SearchModal({ visible, onClose }) {
                                 loadingCount={5}
                             />
                             {
-                                product.length === 0 && <p>Ko co san pham nao nhu ban tim kiem</p>
+                                (value && product.length === 0) && <p>Ko co san pham nao nhu ban tim kiem</p>
                             }
                             {/* Button */}
-                            <Link className="btn btn-link px-0 text-reset" to={'/product' + '?q=' + value} onClick={ev => onClose()}>
+                            <Link className="btn btn-link px-0 text-reset" to={'/product' + '?q=' + encodeURI(value)} onClick={ev => onClose()}>
                                 View All <i className="fe fe-arrow-right ml-2" />
                             </Link>
                         </div>

@@ -5,6 +5,8 @@ import rootSaga from './saga'
 import { actionFetchUser, userReducer } from './user'
 import thunk from "redux-thunk"
 import cartReducer from './cart/cartSlice'
+import orderReducer from './order/orderSlice'
+import profileReducer from './profile/profileSlice'
 
 const saga = createSagaMiddleware()
 
@@ -13,7 +15,9 @@ const store = configureStore({
         // product: productReducer,
         auth: authReducer,
         user: userReducer,
-        cart: cartReducer
+        cart: cartReducer,
+        profile: profileReducer,
+        order: orderReducer,
     },
     middleware: [saga, thunk]
 })

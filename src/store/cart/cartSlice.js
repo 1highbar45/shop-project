@@ -41,8 +41,8 @@ const cartSlice = createSlice({
     },
 });
 
-export const {
-    setDrawerSettingTab,
-} = cartSlice.actions;
+// export const {
+//     setDrawerSettingTab,
+// } = cartSlice.actions;
 const cartReducer = cartSlice.reducer;
 export default cartReducer;
