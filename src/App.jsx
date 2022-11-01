@@ -27,6 +27,7 @@ import en from './locals/en.json'
 import Page404 from './pages/page404/Page404.jsx'
 import BlogPost from './pages/blog/[slug].jsx'
 import Blog from './pages/blog/Blog.jsx'
+import OrderDetail from './pages/account/order/[slug].jsx'
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
           <Route path='/account' element={<Account path="/account" />} >
             <Route index element={<PersonalInfo />} />
             <Route path='order' element={<Order />} />
+            <Route path='order/:id' element={<OrderDetail />} />
             <Route path='wishlist' element={<Wishlist />} />
             <Route path='address' element={<Address />} />
             <Route path='payment' element={<Payment />} />

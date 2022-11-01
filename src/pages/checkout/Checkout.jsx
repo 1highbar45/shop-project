@@ -4,7 +4,6 @@ import { currency } from '../../utils/number';
 
 export default function Checkout() {
     const cart = useSelector(store => store.cart)
-    console.log(cart);
     return (
         <div>
             {/* BREADCRUMB */}

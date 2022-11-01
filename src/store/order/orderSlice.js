@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { orderService } from '../../services/orderService';
 
 export const fetchGetAllOrder = createAsyncThunk(
     'order/getAllOrder',
     async () => {
-        const res = await profileService.getAddressList();
+        const res = await orderService.getAllOrder();
         return res;
     }
 );
