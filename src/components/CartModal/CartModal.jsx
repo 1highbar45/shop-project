@@ -110,7 +110,7 @@ export default function CartModal({ visible, onClose }) {
                         </ul>
                         {/* Footer */}
                         <div className="modal-footer line-height-fixed font-size-sm bg-light mt-auto">
-                            <strong>Subtotal</strong> <strong className="ml-auto">$89.00</strong>
+                            <strong>Subtotal</strong> <strong className="ml-auto">{currency(cart?.subTotal)}</strong>
                         </div>
                         {/* Buttons */}
                         <div className="modal-body">
